@@ -7,7 +7,7 @@ import Table from './components/Table.vue'
 <template>
   <div>
     <Suspense>
-      <Table />
+      <Table/>
       <template #fallback>
         <h1 class="text-3xl font-bold underline">Loading...</h1>
       </template>
