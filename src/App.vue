@@ -1,18 +1,8 @@
 <script setup>
-import { Suspense } from 'vue'
-import Table from './components/Table.vue'
-
 </script>
-
 <template>
-  <div>
-    <Suspense>
-      <Table/>
-      <template #fallback>
-        <h1 class="text-3xl font-bold underline">Loading...</h1>
-      </template>
-    </Suspense>
-  </div>
+  <header>
+    <h1 class="font-semibold uppercase p-4">NBA Player</h1>
+  </header>
+  <router-view></router-view>
 </template>
-
-<style scoped></style>
