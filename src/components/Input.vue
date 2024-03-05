@@ -1,30 +1,33 @@
-<script setup lang="ts">
-import { getCurrentInstance, ref } from 'vue';
+<script setup>
+import { ref, defineEmits } from 'vue';
 
-let inputValue = ref<string>('')
+const inputValue = ref('');
 
-defineEmits(['emitValue', 'resetInput']);
-defineProps({
-    placeholder: {
-        type: String,
-        required: true,
-    }
-});
-
+defineEmits(['emitValue']);
+const props = defineProps({
+	id: {
+		type: String,
+		required: true,
+	},
+	label: {
+		type: String,
+		required: true,
+	},
+	type: {
+		type: String,
+		required: true,
+	}
+})
 </script>
+
 <template>
-    <input 
-        type="search" 
-        :v-placeholder="placeholder" 
-        v-model="inputValue"
-        @input="$emit('emitValue', inputValue)"
-    >
-    <button 
-        v-if="inputValue"
-        type="reset"
-        @click="$emit('resetInput')"
-        class="text-white px-2 bg-indigo-600 justify-center rounded"
-    >
-        <span class="text-bolder">Reset</span>
-    </button>
+	<div class="flex flex-col gap-4">
+		<label class="text-md"> {{ props.label }}</label>
+		<input :id="props.id"
+			class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+			:type="props.type" 
+			v-model="inputValue"
+			@input="$emit('emitValue', inputValue)"
+		>
+	</div>
 </template>

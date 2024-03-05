@@ -5,18 +5,19 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from './pages/Home.vue'
 import Profile from './pages/Profile.vue'
 
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
-            name: 'Home',
+            name: 'home',
             component: Home,
         },
         {
-            path: '/profile',
-            name: 'Profile',
+            path: '/profile/:id',
+            name: 'profile',
             component: Profile,
+            props: true,
         },
     ]
 })

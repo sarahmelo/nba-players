@@ -25,7 +25,7 @@ function handleOnClick() {
 <template>
     <button 
         type="button"
-        class="button border border-solid text-indigo-600 border-indigo-300 px-4 py-1 rounded"
+        class="button h-fit border border-solid text-blue-800 border-blue-800 px-4 py-2 rounded"
         @click="handleOnClick"
     >
         {{ props.isAscending ? 'Z-A' : 'A-Z' }}

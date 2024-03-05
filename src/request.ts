@@ -8,8 +8,22 @@ const axios = new Axios({
 });
 
 export async function getPlayers() {
-  return axios.get('v1/players').then(({ data }) => {
+  const endpoint = 'v1/players/';
+
+  return axios.get(endpoint).then(({ data }) => {
     const responseData = JSON.parse(data);
+    
+    console.log(responseData)
+
+    return responseData.data
+  })
+}
+
+export async function getPlayerDetails(id: number) {
+  const endpoint = `v1/players/${id}`;
+  
+  return axios.get(endpoint).then(({ data }) => {
+    const responseData = JSON.parse(data)
     
     console.log(responseData)
 
