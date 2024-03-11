@@ -1,4 +1,3 @@
-const { Sequelize, DataTypes } = require('sequelize');
 const sqlite3 = require('sqlite3');
 const express = require('express');
 const cors = require('cors');
@@ -11,14 +10,9 @@ const corsOptions = {
     origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
 };
-const sequelize = new Sequelize ({
-    dialect: 'sqlite',
-    storage: './database.db'
-})
 
 async function setupApp() {
     try {
-        await sequelize.sync({ force: true });
         app.use(cors(corsOptions));
         app.use(express.json())
 
@@ -42,7 +36,9 @@ async function startServer() {
             }
 
             try {
+                await db.run('PRAGMA foreign_keys=1');
                 await db.run('BEGIN TRANSACTION');
+
 
                 await db.run(`
                     CREATE TABLE IF NOT EXISTS Team (
@@ -71,14 +67,14 @@ async function startServer() {
                         draft_year INTEGER,
                         draft_round INTEGER,
                         draft_number INTEGER,
-                        team INTEGER,
+                        team_id INTEGER,
                         FOREIGN KEY (team) REFERENCES team(id)
                     )
                 `)
 
-
                 const generatePlayer = db.prepare(`
-                    INSERT INTO Player (
+                    INSERT or REPLACE INTO Player (
+                        id,
                         first_name, 
                         last_name, 
                         position, 
@@ -90,13 +86,13 @@ async function startServer() {
                         draft_year, 
                         draft_round, 
                         draft_number,
-                        team
+                        team_id
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 `)
 
                 const generateTeam = db.prepare(`
-                    INSERT INTO Team (
+                    INSERT or REPLACE INTO Team (
                         id,
                         conference,
                         division,
@@ -109,8 +105,6 @@ async function startServer() {
                 `)
 
                 for (const player of players) {
-                    console.log('=====> player', player)
-
                     generateTeam.run([
                         player.team.id,
                         player.team.conference,
@@ -122,6 +116,7 @@ async function startServer() {
                     ])
 
                     generatePlayer.run([
+                        player.id,
                         player.first_name, 
                         player.last_name, 
                         player.position, 
@@ -133,7 +128,7 @@ async function startServer() {
                         player.draft_year, 
                         player.draft_round, 
                         player.draft_number,
-                        player.team
+                        player.team.id
                     ])
                 }
     

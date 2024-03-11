@@ -3,14 +3,17 @@
   import Table from '../components/Table.vue';
   import { playerList, playersAPI } from '../api';
   import ButtonFilter from '../components/ButtonFilter.vue';
-  import { getPlayers } from '../request';
+  import { fillDataBasePlayer, getPlayers } from '../request';
   import Search from '../components/Search.vue'
 
   const isAscending = ref(true);
 
   watchEffect(async () => {
-    playersAPI.value = await getPlayers()
+    const tst = await getPlayers()
+    playersAPI.value = tst
     playerList.value = playersAPI.value;
+    
+    await fillDataBasePlayer(tst)
   });
 
   function handleSort() {
