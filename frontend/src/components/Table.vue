@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router';
 import { playerList } from '../api';
 import { router } from '../main';
+import { Ref, ref } from 'vue';
 
 export interface IPlayer {
   first_name: string;
@@ -10,6 +11,8 @@ export interface IPlayer {
   country: string;
   id: number;
 }
+
+let isAscending = ref(false);
 
 function navigateEditPlayer(playerId: number) {
   router.push({
@@ -20,46 +23,105 @@ function navigateEditPlayer(playerId: number) {
   })
 }
 
-</script>
-<template class="w-full ">
-  <table class="grid max-w-[50rem] overflow-auto border rounded border-blue-800 p-4 border-spacing-2 border-separate">
-    <thead>
-      <tr class="flex w-max">
-        <th class="bg-blue-200 py-2 md:indent-8 w-[19rem] text-start">Name</th>
-        <th class="bg-blue-200 py-2 md:indent-8 w-[17rem] text-start">College</th>
-        <th class="bg-blue-200 py-2 md:indent-8 w-[18rem] text-start">Country</th>
-        <th class="bg-gray-800 py-2 w-[12rem]"></th>
-      </tr>
-    </thead>
-    <tbody class="gap-2 block overflow-auto w-auto">
-      <tr v-for="player in playerList">
-        <td>
-          {{ player.first_name }} {{ player.last_name }}
-        </td>
-        <td >{{ player.college }}</td>
-        <td >{{ player.country }}</td>
-        <td >
-          <button
-            @click="navigateEditPlayer(player.id)"
-            class="rounded mr-4 bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
-          >
-            Editar
-          </button>
-          <button
-            class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
-          >
-            Excluir
-          </button>
-          <button>
-            
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</template>
-<style>
-table {
-  width: calc(100vw - 40px);
+function sortTable() { 
+  isAscending.value = !isAscending.value
+
+  return isAscending.value
+    ? playerList.value?.sort((a, b) => a.first_name.localeCompare(b.first_name))
+    : playerList.value?.sort((a, b) => b.first_name.localeCompare(a.first_name))
+
 }
-</style>
+
+function tableColumnsName() {
+  return ['First Name', 'Last Name', 'Position', 'Height', 'Weight', 'Team', 'Country',]
+}
+
+</script>
+<template>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                  <th 
+                    v-for="col in tableColumnsName()" 
+                    scope="col" 
+                    class="px-6 py-3"
+                  >
+                    <div 
+                      class="flex items-center" 
+                      v-if="col === 'First Name'"
+                    >
+                      {{ col }}
+                      <button @click="sortTable()">
+                        <svg 
+                        class="w-6 h-6 text-gray-800 dark:text-white" 
+                        aria-hidden="true"  
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          stroke="currentColor" 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          stroke-width="2" 
+                          d="m8 15 4 4 4-4m0-6-4-4-4 4"
+                        />
+                      </svg>
+                      </button>
+                    </div>  
+                    <div 
+                      v-if="col !== 'First Name'" 
+                      class="flex items-center"
+                    >
+                          {{ col }}
+                      </div>
+                  </th>
+                  <th 
+                    scope="col" 
+                    class="px-6 py-3"
+                  >
+                      <div class="flex items-center">Actions</div>
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr 
+                v-for="player in playerList" 
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              >
+                  <td class="px-6 py-4">
+                      {{ player.first_name }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.last_name }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.position }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.height }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.weight }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.team.full_name }}
+                  </td>
+                  <td class="px-6 py-4">
+                      {{ player.country }}
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                  <button 
+                    @click="navigateEditPlayer(player.id)"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Edit
+                  </button>
+
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</template>

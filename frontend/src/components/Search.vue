@@ -27,13 +27,5 @@ function handleEmitValue(value: string) {
             v-model="inputValue"
 
         />
-        <button 
-            v-if="inputValue"
-            type="reset"
-            @click="$emit('resetInput')"
-            class="text-white px-2 bg-indigo-600 justify-center rounded"
-        >
-            <span class="text-bolder">Reset</span>
-        </button>
     </div>
 </template>

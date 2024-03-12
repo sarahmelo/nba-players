@@ -5,6 +5,7 @@
   import ButtonFilter from '../components/ButtonFilter.vue';
   import { fillDataBasePlayer, getPlayers } from '../request';
   import Search from '../components/Search.vue'
+  import Button from 'primevue/button';
 
   const isAscending = ref(true);
 
@@ -15,16 +16,6 @@
     
     await fillDataBasePlayer(tst)
   });
-
-  function handleSort() {
-    isAscending.value = !isAscending.value;
-
-    playerList.value?.sort((player1, player2) => {
-      return isAscending.value
-        ? player1.first_name < player2.first_name
-        : player1.first_name > player2.first_name
-    })
-  }
 
   function handleSearch(value: string) {
     playerList.value = playersAPI.value?.filter(({ first_name, last_name }) => {
@@ -43,21 +34,9 @@
 
 <template>
     <div class="flex flex-col items-center px-8 gap-4">
-      <div class="flex gap-4 items-end">
-        <ButtonFilter 
-          :isAscending="isAscending"
-          :handleFilter="handleSort" 
-          :text="'A-Z'"
-        />
-        <Search
-          :placeholder="'Seach players'"
-          @emit-value="handleSearch"
-          @reset-input="handleResetSearch"
-        />
-      </div>
-      <div>
+      <div class="table-container w-fit">
         <Suspense>
-          <Table/>
+          <Table></Table>
           <template #fallback>
             <h1 class="text-3xl font-bold underline">Loading players...</h1>
           </template>
@@ -65,4 +44,8 @@
       </div>
     </div>
 </template>
-../components/Search.vue
+<style>
+.table-container {
+  width: min(calc(100vw - 4rem), 68.7rem);
+}
+</style>
