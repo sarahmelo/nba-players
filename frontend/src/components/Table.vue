@@ -16,7 +16,7 @@ let isAscending = ref(false);
 
 function navigateEditPlayer(playerId: number) {
   router.push({
-    name: 'profile',
+    name: 'edit-player',
     params: {
       id: playerId
     }
@@ -38,8 +38,8 @@ function tableColumnsName() {
 
 </script>
 <template>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+  <div class="relative overflow-x-auto sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th 
@@ -111,14 +111,18 @@ function tableColumnsName() {
                   <td class="px-6 py-4">
                       {{ player.country }}
                   </td>
-                  <td class="px-6 py-4 text-right">
-                  <button 
-                    @click="navigateEditPlayer(player.id)"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
+                  <td class="flex gap-2 px-6 py-4 text-right">
+                    <button 
+                      class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                    >
+                    Remove
+                    </button>
+                    <button 
+                      @click="navigateEditPlayer(player.id)"
+                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
                     Edit
-                  </button>
-
+                    </button>
                   </td>
               </tr>
           </tbody>

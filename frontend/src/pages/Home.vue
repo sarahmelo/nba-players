@@ -1,13 +1,8 @@
 <script setup lang="ts">
-  import { Suspense, computed, ref, watchEffect } from 'vue';
+  import { watchEffect } from 'vue';
   import Table from '../components/Table.vue';
   import { playerList, playersAPI } from '../api';
-  import ButtonFilter from '../components/ButtonFilter.vue';
   import { fillDataBasePlayer, getPlayers } from '../request';
-  import Search from '../components/Search.vue'
-  import Button from 'primevue/button';
-
-  const isAscending = ref(true);
 
   watchEffect(async () => {
     const tst = await getPlayers()
@@ -16,36 +11,31 @@
     
     await fillDataBasePlayer(tst)
   });
-
-  function handleSearch(value: string) {
-    playerList.value = playersAPI.value?.filter(({ first_name, last_name }) => {
-      const didMatch = [first_name, last_name].reduce(
-        (prevResult, current) => prevResult || current.toLowerCase().substr(0, value.toLowerCase().length) === value.toLowerCase(),
-        false,
-      )
-        return didMatch;
-      })
-  }
-
-  function handleResetSearch() {
-    playerList.value = playersAPI.value;
+  
+  function isLoadingPlayersData() {
+    return !playerList.value
   }
 </script>
 
 <template>
-    <div class="flex flex-col items-center px-8 gap-4">
-      <div class="table-container w-fit">
-        <Suspense>
+    <div class="flex flex-col items-start px-8 gap-4">
+      <h3 class="text-xl mb-2"><strong>Basketball</strong> Table Players</h3>
+      <p class="text-sm" v-if="isLoadingPlayersData()">
+          Baixando informações dos jogadores...
+      </p>
+      <div class="table-container w-fit shadow-md">
+        <div>
           <Table></Table>
-          <template #fallback>
-            <h1 class="text-3xl font-bold underline">Loading players...</h1>
-          </template>
-        </Suspense>
+        </div>
       </div>
     </div>
 </template>
 <style>
 .table-container {
-  width: min(calc(100vw - 4rem), 68.7rem);
+  width: min(calc(100vw - 2rem), 68.7rem);
+  height: 100%;
+  max-height: calc(100vh - 14.5rem);
+  overflow-y: auto;
+  overflow-x: auto;
 }
 </style>

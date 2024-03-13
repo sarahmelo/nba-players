@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import Input from './Input.vue';
 
 let inputValue = ref<string>('')
@@ -20,6 +20,7 @@ function handleEmitValue(value: string) {
 <template>
     <div class="flex items-end">
         <Input
+            :placeholder="'Busque por jogadores'"
             :type="'search'"
             :label="'Busque por jogadores'"
             :id="'search'"

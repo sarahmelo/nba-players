@@ -1,5 +1,6 @@
 <script setup>
 import { playerList, playersAPI } from '../api';
+import { router } from '../main';
 import Search from './Search.vue';
 
   function handleSearch(value) {
@@ -13,17 +14,20 @@ import Search from './Search.vue';
   }
 </script>
 <template>
-    <header class="flex p-4 fixed z-10 bg-white w-lvw top-0 shadow-sm">
+    <header class="flex justify-between p-4 px-8 fixed z-10 bg-white w-lvw top-0 shadow-sm">
         <div class="flex items-center">
             <img class="h-8" src="../../public/assets/nba_logo.png" alt="">
             <h1 class="text-sm font-semibold uppercase">NBA Player</h1>
         </div>
-        <div></div>
-        <Search
-          :placeholder="'Seach players'"
-          @emit-value="handleSearch"
-        />
-        <div></div>
+        <div 
+          class="search relative md:absolute md:left-[50%] md:translate-x-[-50%] md:bottom-[10px]"
+        >
+          <Search
+            :placeholder="'Seach players'"
+            @emit-value="handleSearch"
+          />
+        </div>
     </header>
 </template>
-<style></style>
+<style>
+</style>

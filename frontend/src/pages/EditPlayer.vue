@@ -13,10 +13,13 @@
 	})
 </script>
 <template>
-	<Suspense>
-		<Form :userData="player.value" />
-		<template #fallback>
-			Carregando...
-		</template>
-	</Suspense>
+	<div class="form-container p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+		<Form :playerData="player" />
+	</div>
 </template>
+<style>
+.form-container {
+	width: min(calc(100vh - 2rem), 40rem);
+
+}
+</style>

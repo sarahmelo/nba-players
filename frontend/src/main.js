@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './pages/Home.vue'
-import Profile from './pages/Profile.vue'
+import EditPlayer from './pages/EditPlayer.vue'
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -14,9 +14,9 @@ export const router = createRouter({
             component: Home,
         },
         {
-            path: '/profile/:id',
-            name: 'profile',
-            component: Profile,
+            path: '/edit-player/:id',
+            name: 'edit-player',
+            component: EditPlayer,
             props: true,
         },
     ]
