@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.19",
     "axios": "^1.6.7",
+    "material-symbols": "^0.17.0",
     "primevue": "^3.49.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0",
@@ -18,11 +19,14 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vue/cli-plugin-typescript": "^5.0.8",
+    "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
-    "vite": "^5.1.4"
+    "typescript": "^5.4.2",
+    "vite": "^5.1.4",
+    "vue-tsc": "^2.0.6"
   }
 }

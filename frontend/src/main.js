@@ -4,6 +4,7 @@ import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './pages/Home.vue'
 import EditPlayer from './pages/EditPlayer.vue'
+import 'material-symbols';
 
 export const router = createRouter({
     history: createWebHistory(),

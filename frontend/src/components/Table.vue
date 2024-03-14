@@ -3,14 +3,6 @@
   import { router } from '../main';
   import { ref } from 'vue';
 
-  export interface IPlayer {
-    first_name: string;
-    last_name: string;
-    college: string;
-    country: string;
-    id: number;
-  }
-
   let isAscending = ref(false);
 
   function navigateEditPlayerPage(playerId: number) {

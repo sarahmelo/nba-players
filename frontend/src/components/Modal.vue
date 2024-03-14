@@ -4,7 +4,7 @@
 
   defineEmits(['close']);
 
-  function closeModal(event) {
+  function closeModal(event: Event) {
     event.preventDefault();
     isOpen.value = false;
   }
@@ -16,7 +16,7 @@
     <div v-if="isOpen" class="modal relative w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div class="flex flex-col gap-2">
         <button class="absolute top-2 right-2" @click="closeModal">
-          <span class="material-symbols-outlined text-lg">
+          <span class="material-symbols-outlined">
             close
           </span>
         </button>

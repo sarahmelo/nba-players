@@ -9,7 +9,7 @@
     }
   })
 
-  function objectIsDefined() {
+  function playerDataIsDone() {
     return Object.keys(props.playerData).length > 0
   }
 
@@ -25,7 +25,7 @@
       <legend class="mb-8 text-lg font-semibold text-[1.22rem]">
         Edit Player Information
       </legend>
-      <p class="text-sm" v-if="!objectIsDefined()">
+      <p class="text-sm" v-if="!playerDataIsDone()">
         Loading data of players, awaiting...
       </p>
       <label for="name">First Name</label>
@@ -45,9 +45,11 @@
 
         </router-link>
         <router-link :to="{ name: 'home' }">
-          <button class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
+          <button 
+            :disabled="!playerDataIsDone()"
+            class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2 disabled:opacity-75"
             @click="handleActiveModal">
-            Save
+            Update
           </button>
         </router-link>
       </div>
