@@ -1,6 +1,7 @@
 <script setup>
   import { playerList, playersAPI } from '../api';
   import Search from './Search.vue';
+  import { router } from '../main';
 
   function handleSearchPlayer(value) {
     playerList.value = playersAPI.value?.filter(({ first_name, last_name }) => {
@@ -9,9 +10,13 @@
           prevResult || current.toLowerCase().substr(0, value.toLowerCase().length) === value.toLowerCase(),
           false
         );
-        
+
         return didMatch;
     })
+  }
+
+  function isHomePage() {
+    return router.currentRoute.value.path === '/';
   }
 </script>
 <template>
@@ -28,7 +33,10 @@
               </h1>
             </router-link>
         </div>
-        <div class="search relative md:absolute md:left-[50%] md:translate-x-[-50%] md:bottom-[10px]">
+        <div
+          v-if="isHomePage()"
+          class="search relative md:absolute md:left-[50%] md:translate-x-[-50%] md:bottom-[10px]"
+        >
           <Search
             :placeholder="'Seach players'"
             @emit-value="handleSearchPlayer"
