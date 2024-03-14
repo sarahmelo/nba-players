@@ -1,40 +1,39 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { playerList } from '../api';
-import { router } from '../main';
-import { Ref, ref } from 'vue';
+  import { playerList } from '../api';
+  import { router } from '../main';
+  import { ref } from 'vue';
 
-export interface IPlayer {
-  first_name: string;
-  last_name: string;
-  college: string;
-  country: string;
-  id: number;
-}
+  export interface IPlayer {
+    first_name: string;
+    last_name: string;
+    college: string;
+    country: string;
+    id: number;
+  }
 
-let isAscending = ref(false);
+  let isAscending = ref(false);
 
-function navigateEditPlayer(playerId: number) {
-  router.push({
-    name: 'edit-player',
-    params: {
-      id: playerId
-    }
-  })
-}
+  function navigateEditPlayerPage(playerId: number) {
+    router.push({
+      name: 'edit-player',
+      params: {
+        id: playerId
+      }
+    })
+  }
 
-function sortTable() { 
-  isAscending.value = !isAscending.value
+  function sortTable() { 
+    isAscending.value = !isAscending.value
 
-  return isAscending.value
-    ? playerList.value?.sort((a, b) => a.first_name.localeCompare(b.first_name))
-    : playerList.value?.sort((a, b) => b.first_name.localeCompare(a.first_name))
+    return isAscending.value
+      ? playerList.value?.sort((a, b) => a.first_name.localeCompare(b.first_name))
+      : playerList.value?.sort((a, b) => b.first_name.localeCompare(a.first_name))
 
-}
+  }
 
-function tableColumnsName() {
-  return ['First Name', 'Last Name', 'Position', 'Height', 'Weight', 'Team', 'Country',]
-}
+  function tableColumns() {
+    return ['First Name', 'Last Name', 'Position', 'Height', 'Weight', 'Team', 'Country',]
+  }
 
 </script>
 <template>
@@ -43,7 +42,7 @@ function tableColumnsName() {
           <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th 
-                    v-for="col in tableColumnsName()" 
+                    v-for="col in tableColumns()" 
                     scope="col" 
                     class="px-6 py-3"
                   >
@@ -115,13 +114,13 @@ function tableColumnsName() {
                     <button 
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
-                    Remove
+                      Remove
                     </button>
                     <button 
-                      @click="navigateEditPlayer(player.id)"
+                      @click="navigateEditPlayerPage(player.id)"
                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
-                    Edit
+                      Edit
                     </button>
                   </td>
               </tr>

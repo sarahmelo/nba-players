@@ -1,15 +1,15 @@
 <script setup>
-import { ref } from 'vue';
+	import { ref } from 'vue';
 
-const inputValue = ref('');
+	const inputValue = ref('');
+	const props = defineProps({
+		id: {
+			type: String,
+			required: true,
+		},
+	})
 
-defineEmits(['emitValue']);
-const props = defineProps({
-	id: {
-		type: String,
-		required: true,
-	},
-})
+	defineEmits(['emitValue']);
 </script>
 
 <template>
@@ -21,6 +21,3 @@ const props = defineProps({
 		@input="$emit('emitValue', inputValue)"
 	>
 </template>
-<style>	
-
-</style>

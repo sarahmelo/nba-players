@@ -19,6 +19,10 @@ export const router = createRouter({
             component: EditPlayer,
             props: true,
         },
+        {
+            path: '/:pathMatch(.*)*',
+            redirect: '/',
+        },
     ]
 }) 
 const app = createApp(App);
