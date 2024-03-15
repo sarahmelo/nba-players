@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { watchEffect } from 'vue';
-  import Table from '../components/Table.vue';
   import { playerList, playersAPI } from '../api';
   import { fillDataBasePlayer, getPlayers } from '../request';
+import Table from '../components/table/Table.vue';
 
   watchEffect(async () => {
     const tst = await getPlayers()
@@ -20,7 +20,7 @@
       Uploading informations of players...
     </p>
     <div class="table-container w-fit shadow-md">
-      <Table></Table>
+      <Table/>
     </div>
   </div>
 </template>

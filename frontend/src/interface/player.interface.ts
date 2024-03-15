@@ -4,4 +4,10 @@ export interface IPlayer {
 	college: string;
 	country: string;
 	id: number;
+	position: string;
+	height: string;
+	weight: string;
+	team: {
+		full_name: string;
+	}
 }

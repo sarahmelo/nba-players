@@ -1,5 +1,5 @@
 import { Axios } from 'axios';
-import { IPlayer } from './components/interface/player.interface';
+import { IPlayer } from './interface/player.interface';
 
 const axios = new Axios({
   baseURL: 'https://api.balldontlie.io',

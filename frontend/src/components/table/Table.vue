@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { playerList } from '../api';
-  import { router } from '../main';
+  import { playerList } from '../../api';
+  import { router } from '../../main';
   import { ref } from 'vue';
 
   let isAscending = ref(false);
@@ -119,4 +119,4 @@
           </tbody>
       </table>
   </div>
-</template>
+</template>../../api../../main
