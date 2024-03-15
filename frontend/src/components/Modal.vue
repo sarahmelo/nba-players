@@ -1,13 +1,14 @@
 <script setup lang="ts">
   import { Teleport } from 'vue';
-  import { isOpen } from '../api';
+  import { isOpen } from '../state';
 
-  defineEmits(['close']);
+  defineEmits(['close','confirm']);
 
   function closeModal(event: Event) {
     event.preventDefault();
     isOpen.value = false;
   }
+  
 </script>
 <template>
   <Teleport to="main">
@@ -32,7 +33,7 @@
             class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
             @click="closeModal"
           >
-            Save
+            Confirm
           </button>
         </div>
       </div>
@@ -52,4 +53,4 @@
     position: absolute;
     width: 22.4em;
   }
-</style>
+</style>../state

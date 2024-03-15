@@ -1,6 +1,6 @@
 <script setup>
-  import { playerList, playersAPI } from '../api';
-import { router } from '../routes';
+  import { router } from '../routes';
+  import { playerList, playersAPI } from '../state';
   import Search from './Search.vue';
 
   function handleSearchPlayer(value) {
@@ -43,4 +43,4 @@ import { router } from '../routes';
           />
         </div>
     </header>
-</template>
+</template>../state

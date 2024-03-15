@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import { playerList } from '../../api';
   import { ref } from 'vue';
-import { router } from '../../routes';
+  import { router } from '../../routes';
+  import { handleActiveModal, playerList } from '../../state';
+  import Modal from '../Modal.vue';
 
   let isAscending = ref(false);
 
@@ -104,6 +105,7 @@ import { router } from '../../routes';
                   </td>
                   <td class="flex gap-2 px-6 py-4 text-right">
                     <button 
+                      @click="handleActiveModal"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
                       Remove
@@ -119,4 +121,8 @@ import { router } from '../../routes';
           </tbody>
       </table>
   </div>
-</template>../../api../../main
+  <Modal :close="handleActiveModal">
+    <p class="text-lg font-medium">Remove Player</p>
+    <p class="text-base">Do you really want to delete this player?</p>
+  </Modal>
+</template>../../api../../main../../state

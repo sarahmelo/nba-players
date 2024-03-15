@@ -1,16 +1,6 @@
 <script setup lang="ts">
-  import { watchEffect } from 'vue';
-  import { playerList, playersAPI } from '../api';
-  import { fillDataBasePlayer, getPlayers } from '../request';
-import Table from '../components/table/Table.vue';
-
-  watchEffect(async () => {
-    const tst = await getPlayers()
-    playersAPI.value = tst
-    playerList.value = playersAPI.value;
-
-    await fillDataBasePlayer(tst)
-  });
+  import Table from '../components/table/Table.vue';
+  import { playerList } from '../state';
 </script>
 
 <template>
@@ -32,4 +22,4 @@ import Table from '../components/table/Table.vue';
     overflow-y: auto;
     overflow-x: auto;
   }
-</style>
+</style>../state

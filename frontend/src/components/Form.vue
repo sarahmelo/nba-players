@@ -1,7 +1,17 @@
 <script setup>
   import Input from '../components/Input.vue'
   import Modal from './Modal.vue';
-  import { isOpen } from '../api';
+  import { isOpen } from '../state';
+  import { handleActiveModal } from '../state';
+  import { editPlayer } from '../services';
+  import { ref } from 'vue';
+
+  const formState = ref({
+    first_name: '',
+    last_name: '',
+    jersey_number: '',
+    position: '',
+  })
 
   const props = defineProps({
     playerData: {
@@ -13,9 +23,8 @@
     return Object.keys(props.playerData).length > 0
   }
 
-  function handleActiveModal(event) {
-    event.preventDefault();
-    isOpen.value = !isOpen.value
+  function editPlayerInformations() {
+    await editPlayer();
   }
 </script>
 <template>
@@ -29,13 +38,34 @@
         Loading data of players, awaiting...
       </p>
       <label for="name">First Name</label>
-      <Input :placeholder="'Junior'" :value="playerData.first_name" :id="'name'" />
+      <Input 
+        :v-model="formState.first_name" 
+        :placeholder="'Junior'" 
+        :value="playerData.first_name" 
+        :id="'name'" 
+      />
       <label for="lastName">Last Name</label>
-      <Input :placeholder="'Pereira Costa'" :value="playerData.last_name" :id="'lastName'" />
+      <Input 
+        :v-model="formState.last_name" 
+        :placeholder="'Pereira Costa'" 
+        :value="playerData.last_name" 
+        :id="'lastName'" 
+      />
       <label for="jerseyNumber">Jersey Number</label>
-      <Input :placeholder="'10'" :type="'text'" :value="playerData.jersey_number" :id="'jerseyNumber'" />
+      <Input 
+        :v-model="formState.jersey_number" 
+        :placeholder="'10'"
+        :value="playerData.jersey_number" 
+        :id="'jerseyNumber'" 
+      />
       <label for="position">Positon</label>
-      <Input :placeholder="'G'" :type="'text'" :value="playerData.position" :id="'position'" />
+      <Input 
+        :v-model="formState.position" 
+        :placeholder="'G'" 
+        :type="'text'" 
+        :value="playerData.position" 
+        :id="'position'" 
+      />
       <div class="flex justify-between gap-4 mt-4">
         <router-link :to="{ name: 'home' }">
           <button class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
@@ -55,7 +85,7 @@
       </div>
     </fieldset>
   </form>
-  <Modal :close="handleActiveModal">
+  <Modal :close="handleActiveModal" :confirm="">
     <p class="text-lg font-medium">Update Player Information</p>
     <p class="text-base">Do you really want to update this player's data?</p>
   </Modal>
@@ -64,4 +94,4 @@
   .form-container {
     width: min(calc(100vh - 2rem), 40rem);
   }
-</style>
+</style>../state
