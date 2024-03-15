@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/app.js",
+    "test": "npm sequelize-cli seed:generate --name users"
   },
   "type": "module",
   "author": "",
@@ -14,5 +15,9 @@
     "express": "^4.18.3",
     "sequelize": "^6.37.1",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "tsx": "^4.7.1"
   }
 }
