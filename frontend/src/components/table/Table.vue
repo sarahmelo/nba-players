@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { playerList } from '../../api';
-  import { router } from '../../main';
   import { ref } from 'vue';
+import { router } from '../../routes';
 
   let isAscending = ref(false);
 

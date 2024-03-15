@@ -1,8 +1,8 @@
 <script setup>
   import { ref, watchEffect } from 'vue';
   import { getPlayerDetails } from '../request';
-  import { router } from '../main';
   import Form from '../components/Form.vue';
+import { router } from '../routes';
 
   const player = ref({});
 

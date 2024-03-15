@@ -1,7 +1,7 @@
 <script setup>
   import { playerList, playersAPI } from '../api';
+import { router } from '../routes';
   import Search from './Search.vue';
-  import { router } from '../main';
 
   function handleSearchPlayer(value) {
     playerList.value = playersAPI.value?.filter(({ first_name, last_name }) => {
