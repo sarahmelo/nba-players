@@ -27,3 +27,12 @@ export async function editPlayer(
 
   return data;
 }
+
+
+export async function deletePlayer(
+  id: number
+) {
+  const endpoint = `/players/${id}`;
+
+  return await api.put(endpoint);
+}

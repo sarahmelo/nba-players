@@ -5,15 +5,16 @@
   import Form from '../components/Form.vue';
 
   const player = ref({});
+  const id = ref()
 
   watchEffect(async () => {
-    const playerId = router.currentRoute.value.params.id
-
-    player.value = await getPlayerDetails(playerId);
+    id.value = Number(router.currentRoute.value.params.id);
+    
+    player.value = await getPlayerDetails(id.value);
   })
 </script>
 <template>
-  <Form :playerData="player" />
+    <Form :player="player" :playerId="id" />
 </template>
 <style>
   .form-container {

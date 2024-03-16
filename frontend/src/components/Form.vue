@@ -1,72 +1,77 @@
-<script setup>
+<script setup lang="ts">
   import Input from '../components/Input.vue'
   import Modal from './Modal.vue';
-  import { isOpen } from '../state';
   import { handleActiveModal } from '../state';
+  import { PropType, ref } from 'vue';
   import { editPlayer } from '../services';
-  import { onMounted, ref } from 'vue';
 
-  const formState = ref({
+  const { playerId } = defineProps({
+    player: {
+      type: Object as PropType<IPlayer>,
+      required: true,
+    },
+    playerId: {
+      type: Number,
+      required: true,
+    }
+  })
+
+  const formState = ref<Pick<IPlayer, 'first_name' | 'last_name' | 'position' | 'jersey_number' >>({
     first_name: '',
     last_name: '',
     jersey_number: '',
     position: '',
   })
 
-  onMounted(() => {
-    formState.value = {
-      first_name: playerData.first_name,
-      last_name: playerData.last_name,
-      jersey_number: playerData.jersey_number,
-      position: playerData.position,
-    }
-  })
+  function isValidForm() {
+    const {
+      first_name,
+      jersey_number,
+      last_name,
+      position,
+    } = formState.value;
 
-
-  const props = defineProps({
-    playerData: {
-      required: true,
-    }
-  })
-
-  function playerDataIsDone() {
-    return Object.keys(props.playerData).length > 0
+    return first_name !== '' && jersey_number !== '' 
+      && last_name !== '' && position !== '';
   }
-
+  
   async function editPlayerInformations() {
     await editPlayer(
-      props.playerData.id,
+      playerId,
       formState.value
     )
   }
+
+
 </script>
 <template>
   <form
-    class="form-container p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    class="form-container p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+  >
     <fieldset class="flex flex-col gap-4">
       <legend class="mb-8 text-lg font-semibold text-[1.22rem]">
         Edit Player Information
       </legend>
-      <p class="text-sm" v-if="!playerDataIsDone()">
-        Loading data of players, awaiting...
-      </p>
       <label for="name">First Name</label>
       <Input 
         :placeholder="'Junior'" 
         :id="'name'" 
-        :value="'oi'"
+        :type="'text'" 
         v-model="formState.first_name"
       />
       <label for="lastName">Last Name</label>
       <Input 
         :placeholder="'Pereira Costa'" 
         :id="'lastName'"
+        :type="'text'" 
         v-model="formState.last_name"
       />
       <label for="jerseyNumber">Jersey Number</label>
       <Input 
         :placeholder="'10'"
         :id="'jerseyNumber'" 
+        :type="'text'" 
+        :ref="formState.jersey_number"
         v-model="formState.jersey_number"
       />
       <label for="position">Positon</label>
@@ -79,14 +84,14 @@
       <div class="flex justify-between gap-4 mt-4">
         <router-link :to="{ name: 'home' }">
           <button class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
-            @click="handleCancel">
+          >
             Cancel
           </button>
 
         </router-link>
         <router-link :to="{ name: 'home' }">
           <button 
-            :disabled="!playerDataIsDone()"
+            :disabled="!isValidForm()"
             class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2 disabled:opacity-75"
             @click="handleActiveModal">
             Update
