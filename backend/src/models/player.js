@@ -20,6 +20,7 @@ export const PlayerModel = (sequelize, DataTypes) => {
 
   Player.belongsTo(sequelize.models.Team, {
     foreignKey: "team_id",
+    as: 'team',
   });
 
   return Player;

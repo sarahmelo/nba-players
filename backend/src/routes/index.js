@@ -1,13 +1,26 @@
 import { Router } from "express";
+import { db } from '../database'
 
 const routes = Router();
 
-routes.get("/api/players", async (req, res) => {
-  const players = await db.Player.findAll();
+routes.get("/players", async (req, res) => {
+  const players = await db.Player.findAll({ 
+    include: [{ 
+      model: db.Team,
+      as: 'team',
+    }]
+  });
   res.json(players);
 });
 
-routes.patch("/api/players/:id", async (req, res) => {
+routes.get("/players/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const playerFound = await db.Player.findByPk(id);
+  res.json(playerFound);
+});
+
+routes.put("/players/:id", async (req, res) => {
   const { id } = req.params;
   const allowedFields = [
     "first_name",
@@ -17,6 +30,9 @@ routes.patch("/api/players/:id", async (req, res) => {
   ];
 
   const playerFound = await db.Player.findByPk(id);
+
+  console.log('===> db', req.body)
+
 
   if (!playerFound) {
     res.status(422).json({ message: "Player not found" });
@@ -33,7 +49,7 @@ routes.patch("/api/players/:id", async (req, res) => {
   res.status(200).send();
 });
 
-routes.delete("/api/players/:id", async (req, res) => {
+routes.delete("/players/:id", async (req, res) => {
   const { id } = req.params;
   const player = await db.Player.findByPk(id);
 

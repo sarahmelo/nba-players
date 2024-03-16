@@ -1,13 +1,8 @@
 <script setup lang="ts">
   import { Teleport } from 'vue';
-  import { isOpen } from '../state';
+  import { handleActiveModal, isOpen } from '../state';
 
   defineEmits(['close','confirm']);
-
-  function closeModal(event: Event) {
-    event.preventDefault();
-    isOpen.value = false;
-  }
   
 </script>
 <template>
@@ -16,7 +11,7 @@
     </span>
     <div v-if="isOpen" class="modal relative w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div class="flex flex-col gap-2">
-        <button class="absolute top-2 right-2" @click="closeModal">
+        <button class="absolute top-2 right-2" @click="handleActiveModal">
           <span class="material-symbols-outlined">
             close
           </span>
@@ -25,13 +20,13 @@
         <div class="flex justify-between mt-4">
           <button 
           class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
-            @click="closeModal"
+            @click="handleActiveModal"
           >
             Cancel
           </button>
           <button 
             class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
-            @click="closeModal"
+            @click="$emit('confirm')"
           >
             Confirm
           </button>

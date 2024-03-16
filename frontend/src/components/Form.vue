@@ -4,7 +4,7 @@
   import { isOpen } from '../state';
   import { handleActiveModal } from '../state';
   import { editPlayer } from '../services';
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   const formState = ref({
     first_name: '',
@@ -12,6 +12,16 @@
     jersey_number: '',
     position: '',
   })
+
+  onMounted(() => {
+    formState.value = {
+      first_name: playerData.first_name,
+      last_name: playerData.last_name,
+      jersey_number: playerData.jersey_number,
+      position: playerData.position,
+    }
+  })
+
 
   const props = defineProps({
     playerData: {
@@ -23,8 +33,11 @@
     return Object.keys(props.playerData).length > 0
   }
 
-  function editPlayerInformations() {
-    await editPlayer();
+  async function editPlayerInformations() {
+    await editPlayer(
+      props.playerData.id,
+      formState.value
+    )
   }
 </script>
 <template>
@@ -39,32 +52,29 @@
       </p>
       <label for="name">First Name</label>
       <Input 
-        :v-model="formState.first_name" 
         :placeholder="'Junior'" 
-        :value="playerData.first_name" 
         :id="'name'" 
+        :value="'oi'"
+        v-model="formState.first_name"
       />
       <label for="lastName">Last Name</label>
       <Input 
-        :v-model="formState.last_name" 
         :placeholder="'Pereira Costa'" 
-        :value="playerData.last_name" 
-        :id="'lastName'" 
+        :id="'lastName'"
+        v-model="formState.last_name"
       />
       <label for="jerseyNumber">Jersey Number</label>
       <Input 
-        :v-model="formState.jersey_number" 
         :placeholder="'10'"
-        :value="playerData.jersey_number" 
         :id="'jerseyNumber'" 
+        v-model="formState.jersey_number"
       />
       <label for="position">Positon</label>
       <Input 
-        :v-model="formState.position" 
         :placeholder="'G'" 
         :type="'text'" 
-        :value="playerData.position" 
-        :id="'position'" 
+        :id="'position'"
+        v-model="formState.position"
       />
       <div class="flex justify-between gap-4 mt-4">
         <router-link :to="{ name: 'home' }">
@@ -85,7 +95,7 @@
       </div>
     </fieldset>
   </form>
-  <Modal :close="handleActiveModal" :confirm="">
+  <Modal @confirm="editPlayerInformations">
     <p class="text-lg font-medium">Update Player Information</p>
     <p class="text-base">Do you really want to update this player's data?</p>
   </Modal>

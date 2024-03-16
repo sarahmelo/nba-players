@@ -19,11 +19,11 @@ export async function getPlayerDetails(id: number) {
 
 export async function editPlayer(
   id: number,
-  fields: { [field: string]: string }[]
+  fields: { [key: string]: string }
 ) {
   const endpoint = `/players/${id}`;
 
-  const { data } = await api.patch(endpoint);
+  const { data } = await api.put(endpoint, fields);
 
   return data;
 }
