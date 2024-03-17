@@ -29,10 +29,8 @@ export async function editPlayer(
 }
 
 
-export async function deletePlayer(
-  id: number
-) {
+export async function deletePlayer(id: number) {
   const endpoint = `/players/${id}`;
 
-  return await api.put(endpoint);
+  return await api.delete(endpoint);
 }

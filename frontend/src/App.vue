@@ -3,14 +3,15 @@
   import Header from './components/Header.vue';
   import { getPlayers } from './services';
   import { playerList } from './state';
-
-  watchEffect(async () => {
-    playerList.value = await getPlayers()
-  });
 </script>
 <template>
   <Header/>
-  <main class="flex items-center justify-center m-4 mb-12 pt-28">
+  <main class="flex flex-col gap-4 items-center justify-center m-4 mb-12 pt-28">
     <router-view></router-view>
   </main>
-</template>./state
+</template>
+<style scoped>
+main {
+  width: min(calc(100vw - 2rem), 68.7rem);
+}
+</style>

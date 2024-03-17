@@ -1,10 +1,11 @@
 <script setup>
+  import { onMounted } from 'vue';
   import { router } from '../routes';
-  import { playerList, playersAPI } from '../state';
+  import { playerList, playerListFiltered } from '../state';
   import Search from './Search.vue';
 
   function handleSearchPlayer(value) {
-    playerList.value = playersAPI.value?.filter(({ first_name, last_name }) => {
+    playerListFiltered.value = playerList.value?.filter(({ first_name, last_name }) => {
       const didMatch = [first_name, last_name].reduce(
         (prevResult, current) => 
           prevResult || current.toLowerCase().substr(0, value.toLowerCase().length) === value.toLowerCase(),
@@ -13,10 +14,6 @@
 
         return didMatch;
     })
-  }
-
-  function isHomePage() {
-    return router.currentRoute.value.path === '/';
   }
 </script>
 <template>
@@ -33,10 +30,7 @@
               </h1>
             </router-link>
         </div>
-        <div
-          v-if="isHomePage()"
-          class="search relative md:absolute md:left-[50%] md:translate-x-[-50%] md:bottom-[10px]"
-        >
+        <div class="search relative md:absolute md:left-[50%] md:translate-x-[-50%] md:bottom-[10px]">
           <Search
             :placeholder="'Seach players'"
             @emit-value="handleSearchPlayer"

@@ -1,19 +1,11 @@
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { router } from '../../routes';
-  import { handleActiveModal, playerList } from '../../state';
-  import Modal from '../Modal.vue';
+  import { handleActiveModal, modalState, playerList, playerListFiltered } from '../../state';
+  import { IPlayer } from '../../interface/player.interface';
 
-  let isAscending = ref(false);
+  const isAscending = ref(false);
 
-  function navigateEditPlayerPage(playerId: number) {
-    router.push({
-      name: 'edit-player',
-      params: {
-        id: playerId
-      }
-    })
-  }
+  const emits = defineEmits(['onEdit', 'onRemove'])
 
   function sortTable() { 
     isAscending.value = !isAscending.value
@@ -28,9 +20,24 @@
     return ['First Name', 'Last Name', 'Position', 'Height', 'Weight', 'Team', 'Country',]
   }
 
+  function openModal(event: Event) {
+    handleActiveModal(event);
+  }
+
+  function openModalDelete(event: Event, player: IPlayer) {
+    emits('onRemove', player)
+    modalState.value = 'delete';
+    openModal(event);
+  }
+
+  function openModalEdit(event: Event, player: IPlayer) {
+    emits('onEdit', player);
+    modalState.value = 'edit';
+    openModal(event);
+  }
 </script>
 <template>
-  <div class="relative overflow-x-auto sm:rounded-lg">
+  <div class="relative w-full overflow-x-auto sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -79,7 +86,7 @@
           </thead>
           <tbody>
               <tr 
-                v-for="player in playerList" 
+                v-for="player in playerListFiltered" 
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               >
                   <td class="px-6 py-4">
@@ -98,20 +105,20 @@
                       {{ player.weight }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ player.team.full_name }}
+                    {{ player.country }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ player.country }}
+                      {{ player.team.full_name }}
                   </td>
-                  <td class="flex gap-2 px-6 py-4 text-right">
+                  <td :key="player.id" class="flex gap-2 px-6 py-4 text-right">
                     <button 
-                      @click="handleActiveModal"
+                      @click="event => openModalDelete(event, player)"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
                       Remove
                     </button>
                     <button 
-                      @click="navigateEditPlayerPage(player.id)"
+                      @click="event => openModalEdit(event, player)"
                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Edit
@@ -121,8 +128,4 @@
           </tbody>
       </table>
   </div>
-  <Modal :close="handleActiveModal">
-    <p class="text-lg font-medium">Remove Player</p>
-    <p class="text-base">Do you really want to delete this player?</p>
-  </Modal>
-</template>../../api../../main../../state
+</template>

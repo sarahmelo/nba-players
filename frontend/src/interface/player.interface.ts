@@ -7,6 +7,7 @@ export interface IPlayer {
 	position: string;
 	height: string;
 	weight: string;
+	jersey_number: string;
 	team: {
 		full_name: string;
 	}

@@ -2,7 +2,19 @@
   import { Teleport } from 'vue';
   import { handleActiveModal, isOpen } from '../state';
 
-  defineEmits(['close','confirm']);
+  const { isDisabled } = defineProps({
+    isDisabled: {
+      default: false,
+      type: Boolean,
+    }
+  })
+
+  const events = defineEmits(['close','confirm']);
+
+  function handleConfirmOperation(event: Event) {
+    handleActiveModal(event);
+    events('confirm')
+  }
   
 </script>
 <template>
@@ -19,14 +31,14 @@
         <slot></slot>
         <div class="flex justify-between mt-4">
           <button 
-          class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
+            class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
             @click="handleActiveModal"
           >
             Cancel
           </button>
           <button 
-            class="rounded bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
-            @click="$emit('confirm')"
+            class="rounded disabled:opacity-75 bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
+            @click="handleConfirmOperation"
           >
             Confirm
           </button>
