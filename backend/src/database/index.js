@@ -8,6 +8,10 @@ const sequelize = new Sequelize({
   storage: "database.sqlite",
   define: {
     paranoid: true,
+    underscored: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    deletedAt: "deleted_at",
   },
 });
 

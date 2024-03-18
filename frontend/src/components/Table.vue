@@ -1,57 +1,50 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { handleActiveModal, modalState, playerList, playerListFiltered } from '../../state';
-  import { IPlayer } from '../../interface/player.interface';
+  import { PropType, ref } from 'vue';
+  import { COLUMNS, handleActiveModal, modalState, player, playerList, playerListFiltered } from '../state';
 
   const isAscending = ref(false);
-
   const emits = defineEmits(['onEdit', 'onRemove'])
 
   function sortTable() { 
     isAscending.value = !isAscending.value
 
     return isAscending.value
-      ? playerList.value?.sort((a, b) => a.first_name.localeCompare(b.first_name))
-      : playerList.value?.sort((a, b) => b.first_name.localeCompare(a.first_name))
-
-  }
-
-  function tableColumns() {
-    return ['First Name', 'Last Name', 'Position', 'Height', 'Weight', 'Team', 'Country',]
+      ? playerList.value?.sort((a: Player, b: Player) => a.first_name.localeCompare(b.first_name))
+      : playerList.value?.sort((a: Player, b: Player) => b.first_name.localeCompare(a.first_name))
   }
 
   function openModal(event: Event) {
     handleActiveModal(event);
   }
 
-  function openModalDelete(event: Event, player: IPlayer) {
+  function openModalDelete(event: Event, player: Player) {
     emits('onRemove', player)
     modalState.value = 'delete';
     openModal(event);
   }
 
-  function openModalEdit(event: Event, player: IPlayer) {
+  function openModalEdit(event: Event, player: Player) {
     emits('onEdit', player);
     modalState.value = 'edit';
     openModal(event);
   }
+
 </script>
 <template>
-  <div class="relative w-full overflow-x-auto sm:rounded-lg">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+  <div class="max-h-[75vh] relative w-full overflow-x-auto sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th 
-                    v-for="col in tableColumns()" 
+                    v-for="column of Object.keys(COLUMNS)" 
                     scope="col" 
                     class="px-6 py-3"
                   >
                     <div 
                       class="flex items-center" 
-                      v-if="col === 'First Name'"
                     >
-                      {{ col }}
-                      <button @click="sortTable()">
+                      {{ COLUMNS[column as keyof typeof COLUMNS] }}
+                      <button v-if="column === 'first_name'" @click="sortTable()">
                         <svg 
                         class="w-6 h-6 text-gray-800 dark:text-white" 
                         aria-hidden="true"  
@@ -69,12 +62,6 @@
                       </svg>
                       </button>
                     </div>  
-                    <div 
-                      v-if="col !== 'First Name'" 
-                      class="flex items-center"
-                    >
-                          {{ col }}
-                      </div>
                   </th>
                   <th 
                     scope="col" 
@@ -89,26 +76,13 @@
                 v-for="player in playerListFiltered" 
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               >
-                  <td class="px-6 py-4">
-                      {{ player.first_name }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ player.last_name }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ player.position }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ player.height }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ player.weight }}
-                  </td>
-                  <td class="px-6 py-4">
-                    {{ player.country }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ player.team.full_name }}
+                  <td class="px-6 py-4" v-for="key in Object.keys(COLUMNS)">
+                      <span v-if="key === 'team'">
+                        {{ player['team'].name ?? '-' }}
+                      </span>
+                      <span v-else>
+                        {{ player[key as keyof typeof COLUMNS] ?? '-' }}
+                      </span>
                   </td>
                   <td :key="player.id" class="flex gap-2 px-6 py-4 text-right">
                     <button 

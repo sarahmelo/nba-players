@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { modalState } from '../state';
-import { deletePlayer } from '../services';
+import { deletePlayer, updateTable } from '../services';
 import Modal from './Modal.vue';
   const { player } = defineProps({
     player: {
-      type: Object as PropType<IPlayer>,
+      type: Object as PropType<Player>,
       required: true,
     }
   });
@@ -17,6 +17,7 @@ import Modal from './Modal.vue';
   function deletePlayerOnTable() {
     modalState.value = 'off'
     deletePlayer(player.id)
+    updateTable()
   }
 </script>
 <template>

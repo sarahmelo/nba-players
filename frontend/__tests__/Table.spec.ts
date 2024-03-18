@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'; 
 import { playerList } from '../src/api';
-import { IPlayer } from '../src/interface/player.interface';
 import { router } from '../src/main';
 import Table from '../src/components/table/Table.vue';
 
@@ -14,7 +13,7 @@ describe('Table', () => {
     mockedPlayerList.value = [{ 
 		college: 'School',
 		country: 'Brazil',
-	}] as IPlayer[];
+	}] as Player[];
 
     const wrapper = shallowMount(Table);
     await wrapper.vm.$nextTick();
@@ -29,7 +28,7 @@ describe('Table', () => {
     playerList.value = [{ 
 		college: 'School',
 		country: 'Brazil',
-	}] as IPlayer[];
+	}] as Player[];
 
     const wrapper = shallowMount(Table);
     await wrapper.vm.$nextTick();

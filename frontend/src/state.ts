@@ -1,21 +1,48 @@
 import { ref } from "vue";
-import { IPlayer } from "./interface/player.interface";
 
-export const playerListFiltered = ref<IPlayer[]>();
-export const playerList = ref<IPlayer[]>();
-export const player = ref<IPlayer>();
+
+type FormState = Partial<Player> & {
+    team_id: number
+} 
+
+export const playerListFiltered = ref<Player[]>();
+export const playerList = ref<Player[]>();
+export const player = ref<Player>();
 export const isOpen = ref<boolean>();
 export const modalState = ref<'off' | 'edit' | 'delete'>();
-export const formState = ref<Pick<IPlayer, 'first_name' | 'last_name' | 'position' | 'jersey_number'>>({
+export const teams = ref<Team[]>([]);
+export const formState = ref<FormState>({
+    college: '',
+    country: '',
+    draft_number: 0,
+    draft_round: 0, 
+    draft_year: 0,
     first_name: '',
-    last_name: '',
+    height: '',
+    id: 0,
     jersey_number: '',
+    last_name: '',
     position: '',
+    weight: '',
+    team_id: 0,
 })
+
+export const COLUMNS: Record<keyof Omit<Player, "deleted_at" | "created_at" | "updated_at"| "id">, any> = {
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    college: 'College',
+    position: 'Position',
+    height: 'Height',
+    weight: 'Weight',
+    jersey_number: 'Jersey Number',
+    country: 'Country',
+    draft_year: 'Draft Year',
+    draft_round: 'Draft Round',
+    draft_number: 'Draft Number',
+    team: 'Team'
+  }
 
 export function handleActiveModal(event: Event) {
 	isOpen.value = !isOpen.value
-	console.log('entrou')
-	console.log(isOpen.value)
 	event.preventDefault();
 }

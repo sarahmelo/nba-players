@@ -1,30 +1,39 @@
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue';
-  import Table from '../components/table/Table.vue';
-  import { formState, modalState, playerList, playerListFiltered } from '../state';
-  import { getPlayers } from '../services';
+  import { formState, modalState, playerList, teams } from '../state';
+  import { getTeams, updateTable } from '../services';
   import ModalDelete from '../components/ModalDelete.vue';
   import ModalEdit from '../components/ModalEdit.vue';
+  import Table from '../components/Table.vue';
   
-  const currentPlayer = ref<IPlayer>({ } as IPlayer)
+  const currentPlayer = ref<Player>({ } as Player)
 
-  function editPlayer(player: IPlayer) {
-    currentPlayer.value = player;
+  function editPlayer(player: Player) {
+    setCurrentPlayer(player);
     formState.value = {
       first_name: currentPlayer.value.first_name,
       last_name: currentPlayer.value.last_name,
       jersey_number: currentPlayer.value.jersey_number,
       position: currentPlayer.value.position,
+      college: currentPlayer.value.college,
+      country: currentPlayer.value.country,
+      draft_number: currentPlayer.value.draft_number,
+      draft_round: currentPlayer.value.draft_round,
+      draft_year: currentPlayer.value.draft_year,
+      height: currentPlayer.value.height,
+      id: currentPlayer.value.id,
+      weight: currentPlayer.value.weight,
+      team_id:currentPlayer.value.team.id,
     }
   }
 
-  function removePlayer(player: IPlayer) {
+  function setCurrentPlayer(player: Player) {
     currentPlayer.value = player;
   }
 
   watchEffect(async () => {
-    playerList.value = await getPlayers()
-    playerListFiltered.value = playerList.value
+    updateTable();
+    teams.value = await getTeams();
   });
 </script>
 
@@ -36,7 +45,7 @@
     </p>
       <Table 
         @on-edit="editPlayer" 
-        @on-remove="removePlayer"
+        @on-remove="setCurrentPlayer"
       />
       <ModalDelete 
         v-if="modalState === 'delete'" 

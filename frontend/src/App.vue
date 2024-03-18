@@ -6,7 +6,7 @@
 </script>
 <template>
   <Header/>
-  <main class="flex flex-col gap-4 items-center justify-center m-4 mb-12 pt-28">
+  <main class="flex flex-col my-0 mx-auto gap-4 items-center justify-center m-4 mb-12 pt-28">
     <router-view></router-view>
   </main>
 </template>
