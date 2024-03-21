@@ -1,10 +1,8 @@
-<script setup>
-  import { onMounted } from 'vue';
-  import { router } from '../routes';
+<script setup lang="ts">
   import { playerList, playerListFiltered } from '../state';
   import Search from './Search.vue';
 
-  function handleSearchPlayer(value) {
+  function handleSearchPlayer(value: string) {
     playerListFiltered.value = playerList.value?.filter(({ first_name, last_name }) => {
       const didMatch = [first_name, last_name].reduce(
         (prevResult, current) => 
@@ -17,7 +15,7 @@
   }
 </script>
 <template>
-    <header class="flex justify-between p-4 px-8 fixed z-10 bg-white w-lvw top-0 shadow-sm">
+    <header class="flex justify-between p-4 fixed z-10 bg-white w-lvw top-0 shadow-sm">
         <div class="flex items-center">
             <img 
               class="h-8" 

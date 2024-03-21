@@ -19,26 +19,38 @@
 </script>
 <template>
   <Teleport to="main">
-    <span v-if="isOpen" class="modal-container fixed z-10 top-0 bottom-0 left-0 right-0 bg-slate-600 opacity-10">
+    <span 
+      v-if="isOpen" 
+      class="modal-container fixed z-10 top-0 bottom-0 left-0 right-0 bg-slate-600 opacity-10"
+    >
     </span>
-    <div v-if="isOpen" class="flex overflow-scroll max-h-[80vh] modal fixed w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div 
+      v-if="isOpen" 
+      class="flex overflow-scroll max-h-[80vh] modal fixed w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
       <div class="flex flex-col gap-2">
-        <button class="absolute top-2 right-2" @click="handleActiveModal">
+        <button 
+          @click="handleActiveModal"
+          class="absolute top-2 right-2"
+        >
           <span class="material-symbols-outlined">
             close
           </span>
         </button>
         <slot></slot>
-        <div v-if="!hiddenButtons" class="flex justify-between mt-4">
+        <div 
+          v-if="!hiddenButtons" 
+          class="flex justify-between mt-4"
+        >
           <button 
-            class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
             @click="handleActiveModal"
+            class="rounded border border-red-600 text-red-600 font-semibold uppercase text-sm px-4 py-2"
           >
             Cancel
           </button>
           <button 
-            class="rounded disabled:opacity-75 bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
             @click="handleConfirmOperation"
+            class="rounded disabled:opacity-75 bg-blue-800 text-white font-semibold uppercase text-sm px-4 py-2"
           >
             Confirm
           </button>

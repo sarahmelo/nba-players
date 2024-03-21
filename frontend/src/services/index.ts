@@ -1,38 +1,67 @@
+import { AxiosError } from "axios";
 import { playerList, playerListFiltered } from "../state";
 import { api } from "./config";
 
 export async function getPlayers() {
-  const endpoint = "/players";
+  try {
+    const endpoint = "/players";
 
-  const { data } = await api.get<Player[]>(endpoint);
+    const { data } = await api.get<Player[]>(endpoint);
 
-  return data;
+    return data;
+  } catch (e: unknown) {
+
+    const { message } = e as AxiosError;
+    
+    throw new Error(message)
+  }
 }
 
 export async function editPlayer(
   id: number,
-  fields: Player
+  fields: FormState
 ) {
-  const endpoint = `/players/${id}`;
+  try {
+    const endpoint = `/players/${id}`;
 
-  const { data } = await api.put(endpoint, fields);
+    const { data } = await api.put(endpoint, fields);
+    
+    return data;
+  } catch(e: unknown) {
 
-  return data;
+    const { message } = e as AxiosError;
+
+    throw new Error(message)
+  }
 }
 
 
 export async function deletePlayer(id: number) {
-  const endpoint = `/players/${id}`;
+  try {
+    const endpoint = `/players/${id}`;
 
-  return await api.delete(endpoint);
+    return await api.delete(endpoint);
+  } catch (e: unknown) {
+
+    const { message } = e as AxiosError;
+    
+    throw new Error(message)
+  }
 }
 
 export async function getTeams() {
-  const endpoint = '/teams';
+  try {
+    const endpoint = '/teams';
 
-  const { data } = await api.get(endpoint)
+    const { data } = await api.get(endpoint)
+  
+    return data;
+  } catch (e: unknown) {
 
-  return data;
+    const { message } = e as AxiosError;
+    
+    throw new Error(message)
+  }
 }
 
 export async function updateTable() {

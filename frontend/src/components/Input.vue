@@ -1,6 +1,4 @@
-<script setup>
-	import { ref } from 'vue';
-
+<script setup lang="ts">
 	const props = defineProps({
 		id: {
 			type: String,
@@ -18,6 +16,6 @@
 		:id="props.id"
 		:type="'text'" 
 		:value="modelValue"
-		@input="$emit('update:modelValue', $event.target.value)"
+		@input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
 	>
 </template>

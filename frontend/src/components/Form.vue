@@ -2,6 +2,7 @@
   import Input from '../components/Input.vue'
   import { COLUMNS, formState, teams } from '../state';
   import Select from './Select.vue';
+
 </script>
 <template>
   <form class="overflow-scroll flex flex-col gap-4">
@@ -14,7 +15,7 @@
         <Input 
           :id="key" 
           type="text" 
-          v-model="formState[key as keyof typeof formState]"
+          v-model="formState![key as keyof typeof formState] as string"
         />
       </label>
     </div>

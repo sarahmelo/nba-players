@@ -5,6 +5,8 @@
   import ModalDelete from '../components/ModalDelete.vue';
   import ModalEdit from '../components/ModalEdit.vue';
   import Table from '../components/Table.vue';
+  import ModalError from '../components/ModalError.vue';
+  import Alert from '../components/Alert.vue'
   
   const currentPlayer = ref<Player>({ } as Player)
 
@@ -38,11 +40,13 @@
 </script>
 
 <template>
-  <div class="w-full flex flex-col items-start px-8 gap-4">
+  <div class="w-full flex flex-col items-start gap-4">
+    <Alert v-if="modalState === 'error'"/>
     <h3 class="text-xl mb-2"><strong>Basketball</strong> Table Players</h3>
     <p class="text-sm" v-if="!playerList">
       Uploading informations of players...
     </p>
+    <p></p>
       <Table 
         @on-edit="editPlayer" 
         @on-remove="setCurrentPlayer"
@@ -54,6 +58,9 @@
       <ModalEdit
         v-if="modalState === 'edit'" 
         :player="currentPlayer" 
+      />
+      <ModalError
+        v-if="modalState === 'error'"
       />
   </div>
 </template>

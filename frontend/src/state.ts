@@ -1,15 +1,10 @@
 import { ref } from "vue";
 
-
-type FormState = Partial<Player> & {
-    team_id: number
-} 
-
 export const playerListFiltered = ref<Player[]>();
 export const playerList = ref<Player[]>();
 export const player = ref<Player>();
 export const isOpen = ref<boolean>();
-export const modalState = ref<'off' | 'edit' | 'delete'>();
+export const modalState = ref<'off' | 'edit' | 'delete' | 'error'>();
 export const teams = ref<Team[]>([]);
 export const formState = ref<FormState>({
     college: '',

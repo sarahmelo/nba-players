@@ -23,3 +23,7 @@ interface Player {
     draft_number: number,
     team: Team,
 }
+
+type FormState = Omit<Player, 'team'> & {
+    team_id: number
+} 

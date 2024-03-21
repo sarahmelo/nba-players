@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
-import { modalState } from '../state';
-import { deletePlayer, updateTable } from '../services';
-import Modal from './Modal.vue';
+  import { PropType } from 'vue';
+  import { modalState } from '../state';
+  import { 
+    deletePlayer, 
+    updateTable   
+  } from '../services';
+  import Modal from './Modal.vue';
+  
   const { player } = defineProps({
     player: {
       type: Object as PropType<Player>,

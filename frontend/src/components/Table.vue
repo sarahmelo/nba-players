@@ -1,6 +1,12 @@
 <script setup lang="ts">
-  import { PropType, ref } from 'vue';
-  import { COLUMNS, handleActiveModal, modalState, player, playerList, playerListFiltered } from '../state';
+  import { ref } from 'vue';
+  import { 
+    COLUMNS, 
+    handleActiveModal, 
+    modalState, 
+    playerList, 
+    playerListFiltered 
+  } from '../state';
 
   const isAscending = ref(false);
   const emits = defineEmits(['onEdit', 'onRemove'])
