@@ -1,18 +1,10 @@
 <script setup lang="ts">
-  import { PropType } from 'vue';
-  import { modalState } from '../state';
+  import { currentPlayer, modalState } from '../state';
   import { 
     deletePlayer, 
     updateTable   
   } from '../services';
   import Modal from './Modal.vue';
-  
-  const { player } = defineProps({
-    player: {
-      type: Object as PropType<Player>,
-      required: true,
-    }
-  });
 
   function isModalDeleteActive() {
     return modalState.value === 'delete'
@@ -20,7 +12,7 @@
 
   function deletePlayerOnTable() {
     modalState.value = 'off'
-    deletePlayer(player.id)
+    deletePlayer(currentPlayer.value.id)
     updateTable()
   }
 </script>
@@ -32,9 +24,9 @@
     <p class="text-xl font-medium">Remove Player</p>
     <p class="text-base">Do you really want to delete this player?</p>
     <ul>
-      <li><strong>Name:</strong> {{ player?.first_name }} {{ player?.last_name }}</li>
-      <li><strong>Team:</strong> {{ player?.team.full_name }}</li>
-      <li><strong>Position:</strong> {{ player?.position }}</li>
+      <li><strong>Name:</strong> {{ currentPlayer?.first_name }} {{ currentPlayer?.last_name }}</li>
+      <li><strong>Team:</strong> {{ currentPlayer?.team.full_name }}</li>
+      <li><strong>Position:</strong> {{ currentPlayer?.position }}</li>
     </ul>
   </Modal>
 </template>

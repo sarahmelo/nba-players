@@ -5,12 +5,10 @@ import { api } from "./config";
 export async function getPlayers() {
   try {
     const endpoint = "/players";
-
     const { data } = await api.get<Player[]>(endpoint);
 
     return data;
   } catch (e: unknown) {
-
     const { message } = e as AxiosError;
     
     throw new Error(message)
@@ -23,12 +21,10 @@ export async function editPlayer(
 ) {
   try {
     const endpoint = `/players/${id}`;
-
     const { data } = await api.put(endpoint, fields);
     
     return data;
   } catch(e: unknown) {
-
     const { message } = e as AxiosError;
 
     throw new Error(message)
@@ -42,7 +38,6 @@ export async function deletePlayer(id: number) {
 
     return await api.delete(endpoint);
   } catch (e: unknown) {
-
     const { message } = e as AxiosError;
     
     throw new Error(message)
@@ -52,12 +47,10 @@ export async function deletePlayer(id: number) {
 export async function getTeams() {
   try {
     const endpoint = '/teams';
-
     const { data } = await api.get(endpoint)
   
     return data;
   } catch (e: unknown) {
-
     const { message } = e as AxiosError;
     
     throw new Error(message)

@@ -19,20 +19,16 @@
       : playerList.value?.sort((a: Player, b: Player) => b.first_name.localeCompare(a.first_name))
   }
 
-  function openModal(event: Event) {
-    handleActiveModal(event);
-  }
-
   function openModalDelete(event: Event, player: Player) {
     emits('onRemove', player)
     modalState.value = 'delete';
-    openModal(event);
+    handleActiveModal(event);
   }
 
   function openModalEdit(event: Event, player: Player) {
     emits('onEdit', player);
     modalState.value = 'edit';
-    openModal(event);
+    handleActiveModal(event);
   }
 
 </script>
@@ -80,6 +76,7 @@
           <tbody>
               <tr 
                 v-for="player in playerListFiltered" 
+                :key="player.id"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               >
                   <td class="px-6 py-4" v-for="key in Object.keys(COLUMNS)">
@@ -90,7 +87,7 @@
                         {{ player[key as keyof typeof COLUMNS] ?? '-' }}
                       </span>
                   </td>
-                  <td :key="player.id" class="flex gap-2 px-6 py-4 text-right">
+                  <td class="flex gap-2 px-6 py-4 text-right">
                     <button 
                       @click="event => openModalDelete(event, player)"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"

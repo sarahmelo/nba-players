@@ -6,6 +6,7 @@ export const player = ref<Player>();
 export const isOpen = ref<boolean>();
 export const modalState = ref<'off' | 'edit' | 'delete' | 'error'>();
 export const teams = ref<Team[]>([]);
+export const currentPlayer = ref<Player>({ } as Player)
 export const formState = ref<FormState>({
     college: '',
     country: '',

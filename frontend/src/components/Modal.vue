@@ -26,7 +26,7 @@
     </span>
     <div 
       v-if="isOpen" 
-      class="flex overflow-scroll max-h-[80vh] modal fixed w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      class="flex overflow-auto max-h-[80vh] modal fixed w-fit z-20 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="flex flex-col gap-2">
         <button 

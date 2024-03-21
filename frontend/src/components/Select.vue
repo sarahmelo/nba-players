@@ -3,14 +3,14 @@
 	import { formState } from '../state';
 
 	const { options } = defineProps({
-			modelValue: {
-					default: null,
-					required: true,
-					type: Number,
-			},
-			options: {
-					type: Object as PropType<Team[]>,
-			}
+		modelValue: {
+			default: null,
+			required: true,
+			type: Number,
+		},
+		options: {
+			type: Object as PropType<Team[]>,
+		}
 	})
 </script>
 <template>
@@ -27,7 +27,7 @@
 			:value="option.id"
 			:key="option.id"
 		>
-				{{ option.full_name }}
+			{{ option.full_name }}
 		</option>
 	</select>
 </template>

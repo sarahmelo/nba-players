@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
-  import { formState, modalState, playerList, teams } from '../state';
+  import { watchEffect } from 'vue';
+  import { currentPlayer, formState, modalState, playerList, teams } from '../state';
   import { getTeams, updateTable } from '../services';
   import ModalDelete from '../components/ModalDelete.vue';
   import ModalEdit from '../components/ModalEdit.vue';
@@ -8,8 +8,6 @@
   import ModalError from '../components/ModalError.vue';
   import Alert from '../components/Alert.vue'
   
-  const currentPlayer = ref<Player>({ } as Player)
-
   function editPlayer(player: Player) {
     setCurrentPlayer(player);
     formState.value = {
@@ -53,11 +51,9 @@
       />
       <ModalDelete 
         v-if="modalState === 'delete'" 
-        :player="currentPlayer"
       />
       <ModalEdit
         v-if="modalState === 'edit'" 
-        :player="currentPlayer" 
       />
       <ModalError
         v-if="modalState === 'error'"
