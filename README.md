@@ -38,6 +38,6 @@ npm run dev
 
 ## ✒️ Autores
 
-* **Desenvolvedor** - *Frontend | Backend | Designer* - [Sarah Melo](https://github.com/sarahmelo)
+* *Frontend | Backend | Designer* - [Sarah Melo](https://github.com/sarahmelo)
 
 Obrigada pelo tempo que dedicou a olhar meu projeto! 😊
